@@ -35,7 +35,7 @@
     display: flex; 
     margin: auto;
     min-width: 420px;
-    height: 175px;
+    min-height: 175px;
     border-radius: 7px;
     flex-direction: column;
     justify-content: space-between;

@@ -14,8 +14,8 @@ const Search = (props) => {
     }
 
     return(
-        <div onSubmit={onSubmit} className="search">
-            <form className="d-flex w-50">
+        <div onSubmit={onSubmit}>
+            <form className="d-flex">
                 <input onChange={onChangeSearch} type="search" className="form-control me-2" placeholder="Search ..." aria-label="Search" />
                 <input type="submit" className="btn btn-outline-light" value="Search" />
             </form>

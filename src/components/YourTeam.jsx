@@ -2,12 +2,12 @@ import React from 'react'
 import Heroe from './Heroe'
 import MenuTotalStats from './MenuTotalStats'
 
-const YourTeam = ({yourteam,remove,statstotal}) => {
+const YourTeam = ({yourteam,remove,statstotal,openmodaldetail}) => {
 
 
     return(
         <div>
-            <div className="d-flex align-items-center">
+            <div className="d-flex flex-column flex-md-row align-items-center">
                 <h3>Your Team {yourteam.length}/6 </h3>
                 {
                     yourteam.length > 0 ? <MenuTotalStats statstotal={statstotal} /> : ''
@@ -27,6 +27,7 @@ const YourTeam = ({yourteam,remove,statstotal}) => {
                                 powerstats={item.powerstats}
                                 team={true}
                                 remove={remove}
+                                openmodaldetail={openmodaldetail}
                             />
                         )
                     }

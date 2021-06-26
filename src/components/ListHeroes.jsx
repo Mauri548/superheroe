@@ -1,14 +1,14 @@
 import React from 'react'
 import Heroe from './Heroe'
 
-const ListHeroes = ({result, add}) => {
+const ListHeroes = ({result, add, openmodaldetail}) => {
     return(
         <div>
             <div className="my-4">
                 <h3>Heroes</h3>
                 {
                     result.length > 0 ?
-                    <div className="fondo d-flex flex-wrap pt-1">
+                    <div className="fondo d-flex flex-wrap pt-1 justify-content-center">
                         {
                             result.map(item => 
                                 <Heroe
@@ -20,6 +20,7 @@ const ListHeroes = ({result, add}) => {
                                     imagen={item.image.url}
                                     team={false}
                                     add={add}
+                                    openmodaldetail={openmodaldetail}
                                 />
                             )
                         }

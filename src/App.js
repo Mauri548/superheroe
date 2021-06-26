@@ -7,19 +7,43 @@ import { BrowserRouter as Router,
   NavLink,
   Redirect
 } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Home from './components/Home';
+import Login from './components/Login';
+import axios from 'axios';
 
 function App() {
 
   const [userAuthenticate,setUserAuthenticate] = useState(true)
+  const [email,setEmail] = useState('')
+  const [password,setPassword] = useState('')
+
+  console.log('home')
+
+  const ChangeEmail = (ev) => {
+    setEmail(ev.target.value)
+  }
+  const ChangePassword = (ev) => {
+    setPassword(ev.target.value)
+  }
+
+  const login = async () => {
+    await axios.post(`http://challenge-react.alkemy.org/`,{'email':email,'password': password})
+    .then((data) => {
+      console.log(data)
+      localStorage.setItem('Token', data.data.token)
+      setUserAuthenticate(true)
+      
+    })
+    .catch(error => console.log(error))
+  }
 
   return (
-    <div>
+    <div className="container-fluid px-0">
       <Router>
         <Switch>
           <Route 
-            exact path="/"
+            exact path={"/"}
             render = {() => {
               return(
                 userAuthenticate? <Redirect to="/home" /> : <Redirect to="/login" />
@@ -30,7 +54,9 @@ function App() {
             <Home/>
           </Route>
           
-          <Route path="/login" >Login</Route>
+          <Route path="/login" >
+            <Login changemail={ChangeEmail} changepassword={ChangePassword} login={login} />
+          </Route>
         </Switch>
       </Router>
     </div>
