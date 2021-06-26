@@ -32,7 +32,6 @@ const Home = () => {
             })
             .catch(error => console.log(error))
         setResult(temp)
-        // console.log(result)
     }
 
     // Añadimos un Hereo a la lista de equipo
