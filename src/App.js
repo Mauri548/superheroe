@@ -1,3 +1,8 @@
+// ********************************* Aclaración de Challenger *************************************
+// No pude terminar el login por completo asi que deje comentado, lo que me falto finalizar es que al logearte
+// te redireccione al /home y hacer un control de validación en el formulario de login.
+
+
 import './App.css';
 
 import { BrowserRouter as Router,
