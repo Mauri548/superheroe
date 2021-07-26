@@ -1,6 +1,5 @@
 import React from 'react'
 import Search from './Search'
-// import '../Style/Navbar.css'
 
 const Navbar = (props) => {
     return(

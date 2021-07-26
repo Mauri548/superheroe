@@ -6,17 +6,18 @@ import YourTeam from './YourTeam'
 import Modal from './Modal'
 import ModalDetail from './ModalDetail'
 import '../Style/style.css'
+import { withRouter } from 'react-router-dom'
 
 const Home = () => {
 
-    const [yourTeam,setYourTeam] = useState([])
-    const [result,setResult] = useState([])
+    const [yourTeam,setYourTeam] = useState([]) // Arreglo con tu equipo
+    const [result,setResult] = useState([]) // Arreglo con el resultado de la busqueda
     const [modal,setModal] = useState(false)
     const [mensaje,setMensaje] = useState('')
     const [statsTotal,setStatsTotal] = useState({
         combat: 0, durability: 0, intelligence: 0, power: 0, speed: 0, strength: 0
-    })
-    const [tipoHeroe,setTipoHeroe] = useState({good: 0, bad: 0})
+    }) // Objeto con el total de los stats
+    const [tipoHeroe,setTipoHeroe] = useState({good: 0, bad: 0}) // Contador de tipo de heroe
     const [detailModal,setDetailModal] = useState(false)
     const [heroeDetail,setHeroeDetail] = useState()
 
@@ -44,6 +45,7 @@ const Home = () => {
                 openModal()
             } else {
 
+                // Verificamos que no existan mas de 3 heroes good o bad
                 if (item.biography == 'good') {
                     if (tipoHeroe.good < 3) {
                         addElement(item)
@@ -68,10 +70,13 @@ const Home = () => {
         
     }
 
+    // Añadimos un heroe al arreglo de yourTeam
     const addElement = (item) => {
         let temp = [ ... yourTeam]
         temp.push(item)
         setYourTeam([... temp])
+
+        // Sumamos los stats totales de los heroes de yourTeam
         setStatsTotal({combat: statsTotal.combat + parseInt(item.powerstats.combat), 
             durability: statsTotal.durability + parseInt(item.powerstats.durability), 
             intelligence: statsTotal.intelligence + parseInt(item.powerstats.intelligence),
@@ -79,6 +84,8 @@ const Home = () => {
             speed: statsTotal.speed + parseInt(item.powerstats.speed),
             strength: statsTotal.strength + parseInt(item.powerstats.strength)
         })
+
+        // Funcion ternaria para sumar a good o bad
         item.biography == 'good' ? setTipoHeroe({good: tipoHeroe.good + 1, bad: tipoHeroe.bad}) 
         : setTipoHeroe({good: tipoHeroe.good ,bad: tipoHeroe.bad + 1})
     }
@@ -104,6 +111,7 @@ const Home = () => {
         setModal(!modal)
     }
 
+    // Buscamos informacion de un heroe en la api por id
     const openModalDetail = async (id) => {
         if (id != undefined) {
             await axios.get(`https://superheroapi.com/api/1903468803153707/${id}`)
@@ -141,4 +149,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default withRouter(Home);
