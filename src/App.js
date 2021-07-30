@@ -14,35 +14,32 @@ import { useEffect, useState } from 'react';
 import Home from './components/Home';
 import Login from './components/Login';
 import axios from 'axios';
-import auth from './auth';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App(props) {
 
   // Variables que se usaran para la autentificación de usuario
   const [isAuth,setAuth] = useState(false)
-  const [email,setEmail] = useState('')
-  const [password,setPassword] = useState('')
+  const [errorMessage,setErrorMessage] = useState(false)
   let history = useHistory()
-
-  const ChangeEmail = (ev) => {
-    setEmail(ev.target.value)
-  }
-  const ChangePassword = (ev) => {
-    setPassword(ev.target.value)
-  }
 
   // challenge@alkemy.org
   // react
-  const login = async () => {
-    await axios.post(`http://challenge-react.alkemy.org/`,{'email':email,'password': password})
+  const login = async (values) => {
+    await axios.post(`http://challenge-react.alkemy.org/`,{'email': values.email,'password': values.password})
     .then((data) => {
       console.log(data)
       localStorage.setItem('Token', data.data.token)
       setAuth(true)
       history.push("/home")
     })
-    .catch(error => console.log(error))
+    .catch(error => {
+      setErrorMessage(true)
+    })
+  }
+
+  const closeErrorMessage = () => {
+    setErrorMessage(false)
   }
 
   return (
@@ -60,7 +57,7 @@ function App(props) {
         <ProtectedRoute exact path="/home" component={Home} isAuth={isAuth} />
         
         <Route exact path="/login" >
-          <Login changemail={ChangeEmail} changepassword={ChangePassword} login={login} />
+          <Login login={login} errorMessage={errorMessage} closeModal={closeErrorMessage} />
         </Route>
       </Switch>
     </div>

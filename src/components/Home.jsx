@@ -40,13 +40,13 @@ const Home = () => {
         // Nos aseguramos de que solo pueda agregar 6 elementos
         if (yourTeam.length < 6) {
             // Buscamos que el elemento no exista para que no se repita
-            if (yourTeam.find(element => element.id == item.id)) {
+            if (yourTeam.find(element => element.id === item.id)) {
                 setMensaje('This hero already exists in your team')
                 openModal()
             } else {
 
                 // Verificamos que no existan mas de 3 heroes good o bad
-                if (item.biography == 'good') {
+                if (item.biography === 'good') {
                     if (tipoHeroe.good < 3) {
                         addElement(item)
                     } else {
@@ -72,9 +72,9 @@ const Home = () => {
 
     // Añadimos un heroe al arreglo de yourTeam
     const addElement = (item) => {
-        let temp = [ ... yourTeam]
+        let temp = [...yourTeam]
         temp.push(item)
-        setYourTeam([... temp])
+        setYourTeam([...temp])
 
         // Sumamos los stats totales de los heroes de yourTeam
         setStatsTotal({combat: statsTotal.combat + parseInt(item.powerstats.combat), 
@@ -86,7 +86,7 @@ const Home = () => {
         })
 
         // Funcion ternaria para sumar a good o bad
-        item.biography == 'good' ? setTipoHeroe({good: tipoHeroe.good + 1, bad: tipoHeroe.bad}) 
+        item.biography === 'good' ? setTipoHeroe({good: tipoHeroe.good + 1, bad: tipoHeroe.bad}) 
         : setTipoHeroe({good: tipoHeroe.good ,bad: tipoHeroe.bad + 1})
     }
 
@@ -94,7 +94,7 @@ const Home = () => {
     const removeYourTeam = (item) => {
         console.log(item)
         var temp = [...yourTeam]
-        const res = temp.filter(element => element.id != item.id)
+        const res = temp.filter(element => element.id !== item.id)
         setYourTeam([...res])
         setStatsTotal({combat: statsTotal.combat - parseInt(item.powerstats.combat), 
             durability: statsTotal.durability - parseInt(item.powerstats.durability), 
@@ -103,7 +103,7 @@ const Home = () => {
             speed: statsTotal.speed - parseInt(item.powerstats.speed),
             strength: statsTotal.strength - parseInt(item.powerstats.strength)
         })
-        item.biography == 'good' ? setTipoHeroe({good: tipoHeroe.good - 1, bad: tipoHeroe.bad})
+        item.biography === 'good' ? setTipoHeroe({good: tipoHeroe.good - 1, bad: tipoHeroe.bad})
         : setTipoHeroe({good: tipoHeroe.good ,bad: tipoHeroe.bad - 1})
     }
 
@@ -113,7 +113,7 @@ const Home = () => {
 
     // Buscamos informacion de un heroe en la api por id
     const openModalDetail = async (id) => {
-        if (id != undefined) {
+        if (id !== undefined) {
             await axios.get(`https://superheroapi.com/api/1903468803153707/${id}`)
                 .then((data) => {
                     console.log(data.data)
